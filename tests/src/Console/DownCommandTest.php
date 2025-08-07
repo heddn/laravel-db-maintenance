@@ -2,20 +2,17 @@
 
 namespace FriendsOfCat\Tests\LaravelDbMaintenance\Console;
 
+use FriendsOfCat\LaravelDbMaintenance\Console\DownCommand;
 use FriendsOfCat\LaravelDbMaintenance\Maintenance;
 use FriendsOfCat\Tests\LaravelDbMaintenance\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @coversDefaultClass \FriendsOfCat\LaravelDbMaintenance\Console\DownCommand
- */
+#[CoversClass(DownCommand::class)]
 class DownCommandTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @covers ::handle
-     */
     public function testHandle()
     {
         $this->withoutMockingConsoleOutput();
@@ -31,9 +28,6 @@ class DownCommandTest extends TestCase
         ]);
     }
 
-    /**
-     * @covers ::handle
-     */
     public function testHandleWithOptions()
     {
         $this->withoutMockingConsoleOutput();

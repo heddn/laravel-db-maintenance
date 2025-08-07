@@ -26,9 +26,7 @@ class DbMaintenanceProvider extends ServiceProvider
         $this->bootMigrations();
         $this->publishesConfiguration();
 
-        $this->app->singleton(Maintenance::class, function ($app) {
-            return new Maintenance($app->make('db'), config('db_maintenance.connection', 'mysql'));
-        });
+        $this->app->singleton(Maintenance::class, fn($app) => new Maintenance($app->make('db'), config('db_maintenance.connection', 'mysql')));
 
         $this->overrideIlluminateMaintenanceCommands();
     }
@@ -48,12 +46,8 @@ class DbMaintenanceProvider extends ServiceProvider
 
     protected function overrideIlluminateMaintenanceCommands()
     {
-        $this->app->extend(ArtisanUpCommand::class, function ($command, Application $app) {
-            return $app->make(UpCommand::class);
-        });
-        $this->app->extend(ArtisanDownCommand::class, function ($command, Application $app) {
-            return $app->make(DownCommand::class);
-        });
+        $this->app->extend(ArtisanUpCommand::class, fn($command, Application $app) => $app->make(UpCommand::class));
+        $this->app->extend(ArtisanDownCommand::class, fn($command, Application $app) => $app->make(DownCommand::class));
     }
 
     /**

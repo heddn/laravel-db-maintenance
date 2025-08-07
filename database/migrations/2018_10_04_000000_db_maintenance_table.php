@@ -12,7 +12,7 @@ class DbMaintenanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('maintenance', function (Blueprint $table) {
+        Schema::create('maintenance', function (Blueprint $table): void {
             $table->increments('id');
             $table->integer('created_at');
             $table->integer('updated_at');

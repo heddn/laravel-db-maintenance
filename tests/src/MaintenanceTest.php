@@ -5,21 +5,13 @@ namespace FriendsOfCat\Tests\LaravelDbMaintenance;
 use FriendsOfCat\LaravelDbMaintenance\Maintenance;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @coversDefaultClass \FriendsOfCat\LaravelDbMaintenance\Maintenance
- */
+#[CoversClass(Maintenance::class)]
 class MaintenanceTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @covers ::up
-     * @covers ::isUp
-     * @covers ::down
-     * @covers ::isDown
-     * @covers ::getLatest
-     */
     public function testTogglingMaintenance()
     {
         /** @var Maintenance $maintenance */
@@ -72,9 +64,6 @@ class MaintenanceTest extends TestCase
         $this->assertMaintenanceTableCount(2);
     }
 
-    /**
-     * @covers ::getLatest
-     */
     public function testLatest()
     {
         /** @var Maintenance $maintenance */

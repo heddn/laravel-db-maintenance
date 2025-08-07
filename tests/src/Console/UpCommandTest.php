@@ -2,20 +2,17 @@
 
 namespace FriendsOfCat\Tests\LaravelDbMaintenance\Console;
 
+use FriendsOfCat\LaravelDbMaintenance\Console\UpCommand;
 use FriendsOfCat\LaravelDbMaintenance\Maintenance;
 use FriendsOfCat\Tests\LaravelDbMaintenance\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @coversDefaultClass \FriendsOfCat\LaravelDbMaintenance\Console\UpCommand
- */
+#[CoversClass(UpCommand::class)]
 class UpCommandTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @covers ::handle
-     */
     public function testHandle()
     {
         $this->withoutMockingConsoleOutput();

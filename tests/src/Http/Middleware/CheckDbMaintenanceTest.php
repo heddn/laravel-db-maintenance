@@ -6,21 +6,17 @@ use Carbon\Carbon;
 use FriendsOfCat\LaravelDbMaintenance\Http\Middleware\CheckDbMaintenance;
 use FriendsOfCat\LaravelDbMaintenance\Maintenance;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
-/**
- * @coversDefaultClass \FriendsOfCat\LaravelDbMaintenance\Http\Middleware\CheckDbMaintenance
- */
+#[CoversClass(CheckDbMaintenance::class)]
 class CheckDbMaintenanceTest extends TestCase
 {
 
     use ProphecyTrait;
 
-    /**
-     * @covers ::handle
-     */
     public function testHandleWhenUp()
     {
         $maintenance = $this->prophesize(Maintenance::class);
@@ -29,18 +25,13 @@ class CheckDbMaintenanceTest extends TestCase
 
         $middleware = new CheckDbMaintenance($maintenance->reveal());
 
-        $next = function () {
-            return 'TRUE';
-        };
+        $next = (fn() => 'TRUE');
 
         $request = Request::create('/');
 
         $this->assertEquals('TRUE', $middleware->handle($request, $next));
     }
 
-    /**
-     * @covers ::handle
-     */
     public function testHandleWhenDown()
     {
         $this->expectException(ServiceUnavailableHttpException::class);
@@ -63,7 +54,7 @@ class CheckDbMaintenanceTest extends TestCase
 
         $middleware = new CheckDbMaintenance($maintenance->reveal());
 
-        $next = function () {
+        $next = function (): void {
         };
 
         $request = Request::create('/');

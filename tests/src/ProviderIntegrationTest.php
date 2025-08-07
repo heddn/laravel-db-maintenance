@@ -3,29 +3,23 @@
 namespace FriendsOfCat\Tests\LaravelDbMaintenance;
 
 use FriendsOfCat\LaravelDbMaintenance\Maintenance;
+use FriendsOfCat\LaravelDbMaintenance\Provider\DbMaintenanceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @coversDefaultClass \FriendsOfCat\LaravelDbMaintenance\Provider\DbMaintenanceProvider
- */
+#[CoversClass(DbMaintenanceProvider::class)]
 class ProviderIntegrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @covers ::boot
-     * @covers ::bootGlobalMiddleware
-     */
     public function testGlobalMiddleware()
     {
         /** @var Maintenance $maintenance */
         $maintenance = $this->app->make(Maintenance::class);
 
         $router = $this->app->get('router');
-        $router->get('/', function () {
-            return new Response();
-        });
+        $router->get('/', fn() => new Response());
 
         $this->get('/')->assertSuccessful();
 
